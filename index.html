@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANA — Let's Make Your Ideas True</title>
+
+    <!-- Fonts: Bebas Neue for display, Cabinet Grotesk + General Sans for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800,900&f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME)
+           Aurora Signal layout + Obsidian Edge colors
+           =========================================== */
+        :root {
+            /* Brand Colors */
+            --gold: #F5C542;
+            --turquoise: #3DD9B6;
+            --blue: #0066ff;
+            --magenta: #FF0080;
+
+            /* Backgrounds */
+            --bg-primary: #08080c;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-border: rgba(255, 255, 255, 0.06);
+
+            /* Text */
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.25);
+
+            /* Typography — MUST use clamp() */
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-heading: 'Cabinet Grotesk', sans-serif;
+            --font-body: 'General Sans', sans-serif;
+            --title-size: clamp(2rem, 6vw, 5rem);
+            --h2-size: clamp(1.5rem, 4vw, 3rem);
+            --h3-size: clamp(1rem, 2vw, 1.5rem);
+            --body-size: clamp(0.8rem, 1.4vw, 1.1rem);
+            --small-size: clamp(0.6rem, 0.9vw, 0.8rem);
+            --hero-size: clamp(3.5rem, 14vw, 12rem);
+
+            /* Spacing — MUST use clamp() */
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --content-gap: clamp(0.75rem, 2vw, 2rem);
+            --element-gap: clamp(0.25rem, 1vw, 1rem);
+
+            /* Animation */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-normal: 0.7s;
+        }
+
+        /* ===========================================
+           VIEWPORT FITTING: MANDATORY BASE STYLES
+           =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: var(--bg-primary);
+            font-family: var(--font-body);
+            color: var(--text-primary);
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+        }
+
+        .card, .container, .content-box {
+            max-width: min(90vw, 1000px);
+            max-height: min(80vh, 700px);
+        }
+
+        .feature-list, .bullet-list {
+            gap: clamp(0.4rem, 1vh, 1rem);
+        }
+        .feature-list li, .bullet-list li {
+            font-size: var(--body-size);
+            line-height: 1.4;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        img, .image-container {
+            max-width: 100%;
+            max-height: min(50vh, 400px);
+            object-fit: contain;
+        }
+
+        /* Responsive breakpoints */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+                --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+                --h2-size: clamp(1rem, 3vw, 1.75rem);
+                --hero-size: clamp(2.5rem, 10vw, 7rem);
+            }
+        }
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+            }
+            .nav-dots, .keyboard-hint, .decorative { display: none; }
+        }
+        @media (max-height: 500px) {
+            :root {
+                --slide-padding: clamp(0.4rem, 2vw, 1rem);
+                --title-size: clamp(1rem, 3.5vw, 1.5rem);
+                --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+                --body-size: clamp(0.65rem, 1vw, 0.85rem);
+            }
+        }
+        @media (max-width: 600px) {
+            :root { --title-size: clamp(1.25rem, 7vw, 2.5rem); }
+            .grid { grid-template-columns: 1fr; }
+            .project-two-col { grid-template-columns: 1fr !important; }
+            .expertise-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* ===========================================
+           AURORA BACKGROUND SYSTEM
+           =========================================== */
+        .aurora {
+            position: absolute; inset: 0; overflow: hidden; z-index: 0;
+            pointer-events: none;
+        }
+        .aurora::before {
+            content: ''; position: absolute;
+            width: 140%; height: 140%; top: -20%; left: -20%;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(61, 217, 182, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 50%, rgba(245, 197, 66, 0.08) 0%, transparent 60%);
+            animation: auroraDrift 14s ease-in-out infinite alternate;
+        }
+        .aurora::after {
+            content: ''; position: absolute;
+            width: 120%; height: 120%; top: -10%; left: -10%;
+            background:
+                radial-gradient(ellipse at 70% 70%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 30%, rgba(0, 102, 255, 0.08) 0%, transparent 50%);
+            animation: auroraDrift 18s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes auroraDrift {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(3%, -2%) rotate(3deg); }
+        }
+
+        .aurora-gold::before {
+            background:
+                radial-gradient(ellipse at 30% 70%, rgba(245, 197, 66, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(61, 217, 182, 0.15) 0%, transparent 45%);
+        }
+
+        .aurora-blue::before {
+            background:
+                radial-gradient(ellipse at 20% 60%, rgba(0, 102, 255, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 40%, rgba(61, 217, 182, 0.12) 0%, transparent 45%);
+        }
+
+        /* ===========================================
+           REVEAL ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-d1 { transition-delay: 0.1s; }
+        .reveal-d2 { transition-delay: 0.2s; }
+        .reveal-d3 { transition-delay: 0.3s; }
+        .reveal-d4 { transition-delay: 0.4s; }
+        .reveal-d5 { transition-delay: 0.5s; }
+        .reveal-d6 { transition-delay: 0.6s; }
+
+        /* ===========================================
+           PROGRESS BAR
+           =========================================== */
+        .progress-bar {
+            position: fixed; top: 0; left: 0;
+            height: 3px; width: 0;
+            background: linear-gradient(90deg, var(--gold), var(--turquoise), var(--blue));
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+
+        /* ===========================================
+           NAV DOTS
+           =========================================== */
+        .nav-dots {
+            position: fixed; right: clamp(0.75rem, 2vw, 1.5rem);
+            top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column;
+            gap: clamp(6px, 1vh, 10px);
+            z-index: 9998;
+        }
+        .nav-dot {
+            width: clamp(6px, 0.6vw, 8px);
+            height: clamp(6px, 0.6vw, 8px);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none; padding: 0;
+        }
+        .nav-dot.active {
+            background: var(--gold);
+            box-shadow: 0 0 8px rgba(245, 197, 66, 0.4);
+            transform: scale(1.4);
+        }
+        .nav-dot:hover { background: rgba(255, 255, 255, 0.4); }
+
+        /* ===========================================
+           SHARED TYPOGRAPHY
+           =========================================== */
+        .section-label {
+            font-family: var(--font-body);
+            font-size: var(--small-size);
+            color: var(--gold);
+            letter-spacing: clamp(2px, 0.5vw, 6px);
+            text-transform: uppercase;
+            font-weight: 600;
+            display: flex; align-items: center;
+            gap: clamp(6px, 1vw, 12px);
+            margin-bottom: clamp(0.75rem, 2vh, 1.5rem);
+        }
+        .section-label::before {
+            content: ''; display: block;
+            width: clamp(16px, 3vw, 40px); height: 2px;
+            background: var(--gold);
+        }
+
+        .slide-title {
+            font-family: var(--font-heading);
+            font-size: var(--h2-size);
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+
+        .slide-subtitle {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: min(90%, 600px);
+            font-weight: 300;
+        }
+
+        .accent-line {
+            width: clamp(40px, 8vw, 80px); height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--turquoise));
+            margin: clamp(0.75rem, 2vh, 1.5rem) 0;
+        }
+
+        /* ===========================================
+           HERO SLIDE
+           =========================================== */
+        .hero-center {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center;
+            position: relative; z-index: 1;
+            flex: 1;
+            padding: var(--slide-padding);
+        }
+
+        .sana-logo {
+            max-height: min(10vh, 80px);
+            max-width: min(40vw, 200px);
+            object-fit: contain;
+            margin-bottom: clamp(1rem, 3vh, 2rem);
+        }
+
+        .sana-logo-full {
+            max-height: min(25vh, 200px);
+            max-width: min(60vw, 450px);
+            object-fit: contain;
+            margin-bottom: clamp(0.5rem, 2vh, 1.5rem);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: var(--hero-size);
+            color: var(--text-primary);
+            letter-spacing: clamp(4px, 1.5vw, 20px);
+            line-height: 0.95;
+        }
+
+        .hero-tagline {
+            font-size: clamp(0.85rem, 1.6vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: clamp(2px, 0.6vw, 8px);
+            text-transform: uppercase;
+            font-weight: 300;
+            margin-top: clamp(1rem, 3vh, 2rem);
+        }
+
+        .hero-stats {
+            display: flex; gap: clamp(1.5rem, 4vw, 4rem);
+            margin-top: clamp(2rem, 5vh, 4rem);
+        }
+        .stat-value {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 3.5vw, 3rem);
+            color: var(--gold);
+            font-weight: 900;
+        }
+        .stat-label {
+            font-size: clamp(0.55rem, 1vw, 0.85rem);
+            color: rgba(255, 255, 255, 0.55);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        /* ===========================================
+           TAGLINE SLIDE
+           =========================================== */
+        .tagline-huge {
+            font-family: var(--font-heading);
+            font-size: clamp(1.8rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.15;
+            max-width: min(90%, 800px);
+        }
+        .tagline-huge .gold { color: var(--gold); }
+        .tagline-huge .turq { color: var(--turquoise); }
+
+        /* ===========================================
+           EXPERTISE GRID (4 cards)
+           =========================================== */
+        .expertise-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            width: 100%;
+            max-width: min(95vw, 1100px);
+        }
+        .expertise-card {
+            flex: 0 1 calc(33.333% - 1.5rem);
+            min-width: 200px;
+        }
+        @media (max-width: 700px) {
+            .expertise-card { flex: 0 1 calc(50% - 1rem); }
+        }
+
+        .expertise-card {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: clamp(8px, 1vw, 14px);
+            padding: clamp(1rem, 2.5vw, 2rem);
+            transition: border-color 0.3s ease, background 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .expertise-card:hover {
+            border-color: rgba(245, 197, 66, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .card-icon {
+            width: clamp(40px, 4.5vw, 60px);
+            height: clamp(40px, 4.5vw, 60px);
+            margin-bottom: clamp(0.5rem, 1vh, 0.75rem);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+        }
+        .card-icon img {
+            max-height: clamp(24px, 3vw, 38px);
+            max-width: clamp(24px, 3vw, 38px);
+            object-fit: contain;
+            filter: brightness(2);
+        }
+
+        /* Per-card icon colors */
+        .card-icon-ai      { background: linear-gradient(135deg, rgba(245,197,66,0.2), rgba(245,197,66,0.05)); }
+        .card-icon-robotics { background: linear-gradient(135deg, rgba(61,217,182,0.2), rgba(61,217,182,0.05)); }
+        .card-icon-iot      { background: linear-gradient(135deg, rgba(0,102,255,0.2), rgba(0,102,255,0.05)); }
+        .card-icon-games    { background: linear-gradient(135deg, rgba(255,0,128,0.2), rgba(255,0,128,0.05)); }
+        .card-icon-crypto   { background: linear-gradient(135deg, rgba(61,217,182,0.2), rgba(245,197,66,0.1)); }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: var(--h3-size);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: clamp(0.2rem, 0.5vh, 0.5rem);
+        }
+
+        .card-desc {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ===========================================
+           PROJECT SLIDES
+           =========================================== */
+        .project-layout {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: var(--content-gap);
+            position: relative; z-index: 1;
+            flex: 1;
+            padding: var(--slide-padding);
+        }
+
+        .project-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1.5rem, 4vw, 3rem);
+            align-items: center;
+        }
+
+        .project-visual {
+            border-radius: clamp(8px, 1vw, 16px);
+            overflow: hidden;
+        }
+        .project-visual img {
+            width: 100%;
+            max-height: min(70vh, 550px);
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Stacked images for two-column layouts */
+        .project-visual-stack {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.5rem, 1vw, 1rem);
+        }
+        .project-visual-stack .project-visual img {
+            max-height: min(35vh, 280px);
+        }
+
+        .project-features {
+            display: flex; flex-wrap: wrap;
+            gap: clamp(0.4rem, 1vw, 0.75rem);
+            margin-top: clamp(0.5rem, 1.5vh, 1rem);
+        }
+
+        .feature-pill {
+            padding: clamp(4px, 0.5vh, 8px) clamp(10px, 1.5vw, 16px);
+            border: 1px solid rgba(61, 217, 182, 0.25);
+            border-radius: 100px;
+            font-size: var(--small-size);
+            color: var(--turquoise);
+            transition: all 0.25s ease;
+        }
+
+        .feature-pill--link {
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .feature-pill--link:hover {
+            background: var(--turquoise);
+            color: var(--bg-primary);
+            border-color: var(--turquoise);
+        }
+
+        .project-bullets {
+            list-style: none;
+            display: flex; flex-direction: column;
+            gap: clamp(0.3rem, 0.8vh, 0.6rem);
+        }
+        .project-bullets li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.5;
+            padding-left: clamp(12px, 1.5vw, 20px);
+            position: relative;
+        }
+        .project-bullets li::before {
+            content: '';
+            position: absolute; left: 0;
+            top: clamp(6px, 0.8vh, 10px);
+            width: clamp(4px, 0.4vw, 6px);
+            height: clamp(4px, 0.4vw, 6px);
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        /* ===========================================
+           CLIENTS GRID
+           =========================================== */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: clamp(0.5rem, 1.2vw, 1rem);
+            width: 100%;
+            max-width: min(90vw, 950px);
+        }
+        @media (max-width: 600px) {
+            .clients-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .client-card {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: clamp(8px, 1vw, 12px);
+            padding: clamp(0.5rem, 1.2vw, 1rem);
+            display: flex; align-items: center; justify-content: center;
+            aspect-ratio: 5/3;
+            transition: border-color 0.3s ease;
+        }
+        .client-card:hover { border-color: rgba(245, 197, 66, 0.2); }
+        .client-card img {
+            max-height: min(8vh, 50px);
+            max-width: 80%;
+            object-fit: contain;
+        }
+        .client-card-text {
+            font-family: var(--font-heading);
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* ===========================================
+           CONTACT SLIDE
+           =========================================== */
+        .contact-links {
+            display: flex; flex-direction: column;
+            gap: clamp(0.4rem, 1vh, 0.75rem);
+            margin-top: clamp(1rem, 2vh, 1.5rem);
+        }
+        .contact-links a {
+            font-size: var(--body-size);
+            color: var(--turquoise);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .contact-links a:hover { color: var(--gold); }
+
+        .contact-row {
+            display: flex; align-items: center;
+            gap: clamp(6px, 1vw, 12px);
+        }
+        .contact-label {
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-width: clamp(40px, 5vw, 70px);
+        }
+
+        /* ===========================================
+           SLIDE NUMBER + BRAND WATERMARKS
+           =========================================== */
+        .slide-number {
+            position: absolute;
+            bottom: clamp(0.75rem, 2vh, 1.5rem);
+            left: clamp(1rem, 3vw, 2rem);
+            font-family: var(--font-heading);
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .brand-mark {
+            position: absolute;
+            bottom: clamp(0.75rem, 2vh, 1.5rem);
+            right: clamp(1rem, 3vw, 2rem);
+            z-index: 2;
+        }
+        .brand-mark img {
+            max-height: clamp(14px, 2vh, 24px);
+            object-fit: contain;
+            opacity: 0.35;
+        }
+
+        /* ===========================================
+           LANGUAGE TOGGLE
+           =========================================== */
+        .lang-toggle {
+            position: fixed;
+            top: clamp(0.75rem, 2vh, 1.5rem);
+            right: clamp(0.75rem, 2vw, 1.5rem);
+            z-index: 99998;
+            display: flex;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .lang-btn {
+            padding: clamp(4px, 0.6vh, 8px) clamp(10px, 1.2vw, 18px);
+            font-family: var(--font-heading);
+            font-size: clamp(0.55rem, 0.8vw, 0.75rem);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .lang-btn.active {
+            color: var(--bg-primary);
+            background: var(--gold);
+        }
+        .lang-btn:not(.active):hover {
+            color: var(--text-secondary);
+        }
+
+        /* ===========================================
+           KEYBOARD HINT
+           =========================================== */
+        .keyboard-hint {
+            position: fixed;
+            bottom: clamp(0.5rem, 1.5vh, 1rem);
+            left: 50%; transform: translateX(-50%);
+            font-size: clamp(0.5rem, 0.7vw, 0.65rem);
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 9997;
+            opacity: 0;
+            animation: hintFade 4s ease-in-out 2s forwards;
+        }
+        @keyframes hintFade {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* ===========================================
+           TEAM PHOTO SLIDE
+           =========================================== */
+        .team-photo-bg {
+            position: absolute; inset: 0; z-index: 0;
+        }
+        .team-photo-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            max-height: none;
+            opacity: 0.25;
+            filter: blur(2px);
+        }
+        .team-photo-bg::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(8,8,12,0.3) 0%, rgba(8,8,12,0.85) 100%);
+        }
+        /* ===========================================
+           IMAGE LIGHTBOX OVERLAY
+           =========================================== */
+        .lightbox {
+            position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            cursor: zoom-out;
+        }
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            transform: scale(0.92);
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+        .lightbox.active img {
+            transform: scale(1);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: clamp(1rem, 3vh, 2rem);
+            right: clamp(1rem, 3vw, 2rem);
+            width: 44px; height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s ease;
+        }
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .project-visual img {
+            cursor: zoom-in;
+        }
+
+        /* ===========================================
+           VIDEO THUMBNAIL WITH PLAY OVERLAY
+           =========================================== */
+        .video-thumb {
+            position: relative;
+            cursor: pointer;
+        }
+        .video-thumb::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: clamp(40px, 5vw, 64px);
+            height: clamp(40px, 5vw, 64px);
+            background: rgba(0, 0, 0, 0.55);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+        .video-thumb::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(calc(-50% + 2px), -50%);
+            z-index: 1;
+            border-style: solid;
+            border-width: clamp(8px, 1.2vw, 12px) 0 clamp(8px, 1.2vw, 12px) clamp(14px, 2vw, 20px);
+            border-color: transparent transparent transparent rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+        .video-thumb:hover::after {
+            background: rgba(245, 197, 66, 0.7);
+            border-color: var(--gold);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        .video-thumb:hover::before {
+            border-left-color: #fff;
+            transform: translate(calc(-50% + 2px), -50%) scale(1.1);
+        }
+
+        .lightbox video {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            transform: scale(0.92);
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+        .lightbox.active video {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Lightbox Overlay (images + video) -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    <img id="lightboxImg" src="" alt="">
+    <video id="lightboxVideo" src="" muted controls style="display:none;"></video>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+
+<!-- Language Toggle -->
+<div class="lang-toggle">
+    <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
+    <button class="lang-btn" data-lang="kr" onclick="switchLang('kr')">KR</button>
+</div>
+
+<!-- Keyboard Hint -->
+<div class="keyboard-hint" data-i18n="nav.hint">Arrow keys / Space to navigate</div>
+
+<!-- ===========================================
+     SLIDE 01: HERO TITLE
+     =========================================== -->
+<section class="slide" data-slide="0">
+    <div class="aurora"></div>
+    <div class="hero-center">
+        <img src="assets/brand/logo_horizontal.png" alt="SANA Company" class="sana-logo reveal">
+        <h1 class="hero-title reveal reveal-d1">SANA Company</h1>
+        <div class="accent-line reveal reveal-d2" style="margin: clamp(0.75rem, 2vh, 1.5rem) auto;"></div>
+        <p class="hero-tagline reveal reveal-d3" data-i18n="hero.tagline">Let's Make Your Ideas True</p>
+        <div class="hero-stats reveal reveal-d4">
+            <div><div class="stat-value" data-count="40">0</div><div class="stat-label" data-i18n="hero.stat.projects">Projects</div></div>
+            <div><div class="stat-value" data-count="20">0</div><div class="stat-label" data-i18n="hero.stat.clients">Clients</div></div>
+            <div><div class="stat-value" data-count="6">0</div><div class="stat-label" data-i18n="hero.stat.domains">Domains</div></div>
+        </div>
+    </div>
+    <div class="slide-number">001</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<!-- ===========================================
+     SLIDE 02: MISSION STATEMENT
+     =========================================== -->
+<section class="slide" data-slide="1">
+    <div class="team-photo-bg">
+        <img src="assets/brand/slide2_img1.png" alt="SANA team at conference">
+    </div>
+    <div class="aurora aurora-gold" style="opacity: 0.6;"></div>
+    <div class="hero-center">
+        <div class="section-label reveal" style="justify-content: center;" data-i18n="mission.label">AI Consulting</div>
+        <p class="tagline-huge reveal reveal-d1" style="text-align: center;" data-i18n="mission.tagline">
+            With <span class="gold">40+ successful projects</span>,
+            we turn ambitious ideas into
+            <span class="turq">shipped products</span>.
+        </p>
+        <div class="accent-line reveal reveal-d2" style="margin: clamp(1rem, 2vh, 2rem) auto;"></div>
+        <p class="slide-subtitle reveal reveal-d3" style="text-align: center;" data-i18n="mission.subtitle">
+            SANA provides end-to-end software development services — from concept to deployment — tailored to your unique needs.
+        </p>
+    </div>
+    <div class="slide-number">002</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<!-- ===========================================
+     SLIDE 03: WHAT WE BUILD (4-card grid)
+     =========================================== -->
+<section class="slide" data-slide="2">
+    <div class="aurora aurora-blue"></div>
+    <div class="project-layout" style="align-items: center; text-align: center;">
+        <div class="section-label reveal" style="justify-content: center;" data-i18n="expertise.label">Areas of Expertise</div>
+        <h2 class="slide-title reveal reveal-d1" style="margin-bottom: clamp(1rem, 3vh, 2rem);" data-i18n="expertise.title">What We Build</h2>
+        <div class="expertise-grid">
+            <div class="expertise-card reveal reveal-d1">
+                <div class="card-icon card-icon-ai"><img src="assets/ai/slide8_img4.png" alt="AI"></div>
+                <div class="card-title" data-i18n="expertise.ai.title">AI / Research</div>
+                <div class="card-desc" data-i18n="expertise.ai.desc">Computer vision, VLMs & large-scale data collection</div>
+            </div>
+            <div class="expertise-card reveal reveal-d2">
+                <div class="card-icon card-icon-robotics"><img src="assets/robotics/slide10_img3.png" alt="Robotics"></div>
+                <div class="card-title" data-i18n="expertise.robotics.title">Robotics</div>
+                <div class="card-desc" data-i18n="expertise.robotics.desc">Autonomous driving, ROS/SDK & fleet ops</div>
+            </div>
+            <div class="expertise-card reveal reveal-d3">
+                <div class="card-icon card-icon-iot"><img src="assets/iot/slide10_img2.png" alt="IoT"></div>
+                <div class="card-title" data-i18n="expertise.iot.title">IoT & Maritime</div>
+                <div class="card-desc" data-i18n="expertise.iot.desc">Sensor monitoring, navigation & geofencing</div>
+            </div>
+            <div class="expertise-card reveal reveal-d4">
+                <div class="card-icon card-icon-games"><img src="assets/games/slide8_img5.png" alt="Games"></div>
+                <div class="card-title" data-i18n="expertise.games.title">Games & Virtual</div>
+                <div class="card-desc" data-i18n="expertise.games.desc">3D metaverses, gamification & live events</div>
+            </div>
+            <div class="expertise-card reveal reveal-d5">
+                <div class="card-icon card-icon-crypto"><img src="assets/crypto/slide8_img8.png" alt="Crypto"></div>
+                <div class="card-title" data-i18n="expertise.crypto.title">Crypto / Web3</div>
+                <div class="card-desc" data-i18n="expertise.crypto.desc">On-chain agents, tokens & smart contracts</div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">003</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<!-- ===========================================
+     SLIDE 04: AI / RESEARCH
+     =========================================== -->
+<section class="slide" data-slide="3">
+    <div class="aurora"></div>
+    <div class="project-layout">
+        <div class="section-label reveal" data-i18n="ai.label">Expertise</div>
+        <div class="project-two-col">
+            <div>
+                <h2 class="slide-title reveal reveal-d1" data-i18n="ai.title">AI / Research</h2>
+                <p class="reveal reveal-d2" style="margin-top: clamp(0.3rem, 1vh, 0.75rem); font-style: italic; color: var(--gold); font-size: var(--body-size);" data-i18n="ai.subtitle">
+                    Embodied AI research, computer vision & real-world data
+                </p>
+                <div class="accent-line reveal reveal-d2"></div>
+                <ul class="project-bullets reveal reveal-d3">
+                    <li data-i18n="ai.bullet1"><strong style="color: var(--gold);">Google DeepMind partnership</strong> — Innovation-leading collaboration on embodied AI research</li>
+                    <li data-i18n="ai.bullet2"><strong style="color: var(--text-primary);">AI Data Generation</strong> — 9,000+ hours of real-world navigation video for advanced AI training</li>
+                    <li data-i18n="ai.bullet3"><strong style="color: var(--text-primary);">Conference Presentations</strong> — Featured at IROS (Abu Dhabi), ICRA (Atlanta), and CORL (Seoul)</li>
+                    <li data-i18n="ai.bullet4"><strong style="color: var(--text-primary);">University Collaborations</strong> — Teams from UC Berkeley, SNU, NUS, and CMU</li>
+                </ul>
+                <div class="project-features reveal reveal-d4">
+                    <a class="feature-pill feature-pill--link" data-pill-link="ai.pill1" href="https://ieeexplore.ieee.org/document/11037317" target="_blank" data-i18n="ai.pill1">Google DeepMind</a>
+                    <a class="feature-pill feature-pill--link" data-pill-link="ai.pill2" href="https://sites.google.com/view/the-earth-rover-challenge/" target="_blank" data-i18n="ai.pill2">IROS 2024</a>
+                    <span class="feature-pill" data-i18n="ai.pill3">ICRA</span>
+                    <span class="feature-pill" data-i18n="ai.pill4">CORL</span>
+                    <a class="feature-pill feature-pill--link" data-pill-link="ai.pill5" href="https://huggingface.co/datasets/frodobots/FrodoBots-2K" target="_blank" data-i18n="ai.pill5">2K hrs Dataset</a>
+                    <a class="feature-pill feature-pill--link" data-pill-link="ai.pill6" href="https://huggingface.co/datasets/frodobots/Berkeley-FrodoBots-7K" target="_blank" data-i18n="ai.pill6">7K hrs Dataset</a>
+                    <a class="feature-pill feature-pill--link" href="https://www.youtube.com/watch?v=B9J9Ld77s5o" target="_blank" data-i18n="ai.pill7">IROS24 Competition</a>
+                </div>
+            </div>
+            <div class="project-visual reveal reveal-d3">
+                <img src="assets/ai/slide7_img2.png" alt="Robotics SDK demo at conference">
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">004</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<!-- ===========================================
+     SLIDE 05: ROBOTICS
+     =========================================== -->
+<section class="slide" data-slide="4">
+    <div class="aurora aurora-gold"></div>
+    <div class="project-layout">
+        <div class="section-label reveal" data-i18n="robotics.label">Expertise</div>
+        <div class="project-two-col">
+            <div>
+                <h2 class="slide-title reveal reveal-d1" data-i18n="robotics.title">Robotics</h2>
+                <p class="reveal reveal-d2" style="margin-top: clamp(0.3rem, 1vh, 0.75rem); font-style: italic; color: var(--gold); font-size: var(--body-size);" data-i18n="robotics.subtitle">
+                    Navigation, manipulation & fleet autonomy
+                </p>
+                <div class="accent-line reveal reveal-d2"></div>
+                <ul class="project-bullets reveal reveal-d3">
+                    <li data-i18n="robotics.bullet1"><strong style="color: var(--text-primary);">EarthRovers</strong> — Autonomous driving robots combining gaming and AI research using real-world navigation</li>
+                    <li data-i18n="robotics.bullet2"><strong style="color: var(--text-primary);">Full ROS & SDK</strong> — Complete robot control software suite for fleet operations</li>
+                    <li data-i18n="robotics.bullet3"><strong style="color: var(--text-primary);">Privacy-first</strong> — Automated face & license plate blur processing on all collected data</li>
+                    <li data-i18n="robotics.bullet4"><strong style="color: var(--text-primary);">Global Community</strong> — Worldwide network of gamers and AI enthusiasts driving robots remotely</li>
+                </ul>
+                <div class="project-features reveal reveal-d4">
+                    <a class="feature-pill feature-pill--link" href="https://etfugi.gg/" target="_blank" data-i18n="robotics.pill1">ET Fugi</a>
+                    <a class="feature-pill feature-pill--link" href="https://github.com/frodobots-org/earth-rovers-sdk" target="_blank" data-i18n="robotics.pill2">Earth Rovers SDK</a>
+                    <span class="feature-pill" data-i18n="robotics.pill3">ROS</span>
+                    <span class="feature-pill" data-i18n="robotics.pill4">Fleet Operations</span>
+                </div>
+            </div>
+            <div class="project-visual-stack reveal reveal-d3">
+                <div class="project-visual">
+                    <img src="assets/robotics/earthrover.png" alt="EarthRovers autonomous robots on sidewalk">
+                </div>
+                <div class="project-visual video-thumb" data-video="assets/robotics/telearms_video.mp4">
+                    <img src="assets/robotics/telearms.jpg" alt="TeleArms robot demo">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">005</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<!-- ===========================================
+     SLIDE 06: IoT & MARITIME INTELLIGENCE
+     =========================================== -->
+<section class="slide" data-slide="5">
+    <div class="aurora aurora-blue"></div>
+    <div class="project-layout">
+        <div class="section-label reveal" data-i18n="iot.label">Expertise</div>
+        <div class="project-two-col">
+            <div>
+                <h2 class="slide-title reveal reveal-d1" data-i18n="iot.title">IoT & Maritime Intelligence</h2>
+                <p class="reveal reveal-d2" style="margin-top: clamp(0.3rem, 1vh, 0.75rem); font-style: italic; color: var(--turquoise); font-size: var(--body-size);" data-i18n="iot.subtitle">
+                    Smart monitoring & autonomous navigation
+                </p>
+                <div class="accent-line reveal reveal-d2"></div>
+                <ul class="project-bullets reveal reveal-d3">
+                    <li data-i18n="iot.bullet1"><strong style="color: var(--text-primary);">Tocaro Blue</strong> — Real-time yacht monitoring: battery, bilge, temperature, humidity, GPS with smart alerts</li>
+                    <li data-i18n="iot.bullet2"><strong style="color: var(--text-primary);">Proteus</strong> — "Tesla on Water" — simplifies radar and chart data into clear, actionable insights for maritime safety</li>
+                    <li data-i18n="iot.bullet3"><strong style="color: var(--text-primary);">Sensor Fusion</strong> — Unified analytics from multiple IoT endpoints for predictive alerting</li>
+                    <li data-i18n="iot.bullet4"><strong style="color: var(--text-primary);">Geofencing</strong> — Location-based alerts and boundary monitoring for fleet management</li>
+                </ul>
+                <div class="project-features reveal reveal-d4">
+                    <a class="feature-pill feature-pill--link" href="https://www.tocaroblue.com/" target="_blank" data-i18n="iot.pill1">Tocaro Blue</a>
+                    <span class="feature-pill" data-i18n="iot.pill2">Real-time Monitoring</span>
+                    <span class="feature-pill" data-i18n="iot.pill3">Autonomous Navigation</span>
+                    <span class="feature-pill" data-i18n="iot.pill4">Sensor Fusion</span>
+                    <span class="feature-pill" data-i18n="iot.pill5">Geofencing</span>
+                </div>
+            </div>
+            <div class="project-visual-stack reveal reveal-d3">
+                <div class="project-visual">
+                    <img src="assets/iot/slide10_img7.png" alt="Tocaro Blue mobile app interface">
+                </div>
+                <div class="project-visual">
+                    <img src="assets/iot/slide11_img2.png" alt="Proteus maritime navigation interface">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">006</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<!-- ===========================================
+     SLIDE 07: GAMES & VIRTUAL EXPERIENCES
+     =========================================== -->
+<section class="slide" data-slide="6">
+    <div class="aurora aurora-gold"></div>
+    <div class="project-layout">
+        <div class="section-label reveal" data-i18n="games.label">Expertise</div>
+        <div class="project-two-col">
+            <div>
+                <h2 class="slide-title reveal reveal-d1" data-i18n="games.title">Games & Virtual Experiences</h2>
+                <p class="reveal reveal-d2" style="margin-top: clamp(0.3rem, 1vh, 0.75rem); font-style: italic; color: var(--gold); font-size: var(--body-size);" data-i18n="games.subtitle">
+                    3D metaverses, gamification & fan engagement
+                </p>
+                <div class="accent-line reveal reveal-d2"></div>
+                <ul class="project-bullets reveal reveal-d3">
+                    <li data-i18n="games.bullet1"><strong style="color: var(--text-primary);">Wimbledon Hill</strong> — 3D avatar fan experience with 10,000+ simultaneous users, renewed for second year</li>
+                    <li data-i18n="games.bullet2"><strong style="color: var(--text-primary);">UEFA Virtual Events</strong> — Champions League fan experience with 20,000+ participants, quiz winners received final tickets</li>
+                    <li data-i18n="games.bullet3"><strong style="color: var(--text-primary);">The Rivals</strong> — Multiplayer business simulation for education, used by universities, Hyundai, and Adidas</li>
+                </ul>
+                <div class="project-features reveal reveal-d4">
+                    <span class="feature-pill" data-i18n="games.pill1">3D Metaverse</span>
+                    <span class="feature-pill" data-i18n="games.pill2">10K–20K Concurrent</span>
+                    <span class="feature-pill" data-i18n="games.pill3">Gamification</span>
+                    <span class="feature-pill" data-i18n="games.pill4">Education</span>
+                </div>
+            </div>
+            <div class="project-visual-stack reveal reveal-d3">
+                <div class="project-visual video-thumb" data-video="assets/games/wimbledon.mp4">
+                    <img src="assets/games/slide14_img2.png" alt="Wimbledon real vs virtual comparison">
+                </div>
+                <div class="project-visual">
+                    <img src="assets/games/slide16_img2.png" alt="UEFA virtual metaverse environment">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">007</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<!-- ===========================================
+     SLIDE 08: CRYPTO & WEB3
+     =========================================== -->
+<section class="slide" data-slide="7">
+    <div class="aurora"></div>
+    <div class="project-layout">
+        <div class="section-label reveal" data-i18n="crypto.label">Expertise</div>
+        <div class="project-two-col">
+            <div>
+                <h2 class="slide-title reveal reveal-d1" data-i18n="crypto.title">Crypto & Web3</h2>
+                <p class="reveal reveal-d2" style="margin-top: clamp(0.3rem, 1vh, 0.75rem); font-style: italic; color: var(--turquoise); font-size: var(--body-size);" data-i18n="crypto.subtitle">
+                    On-chain agents, token economies & NFT systems
+                </p>
+                <div class="accent-line reveal reveal-d2"></div>
+                <ul class="project-bullets reveal reveal-d3">
+                    <li data-i18n="crypto.bullet1"><strong style="color: var(--text-primary);">SAMIsMoving</strong> — World's first on-chain embodied AI agent navigating the real world 24/7 with $SAM token</li>
+                    <li data-i18n="crypto.bullet2"><strong style="color: var(--text-primary);">LeelooSpeaks</strong> — First emotional AI influencer, 3D avatar livestreaming 24/7 with influence-based $LEELOO token</li>
+                    <li data-i18n="crypto.bullet3"><strong style="color: var(--text-primary);">BitRobot</strong> — Decentralized robot network converting fleets and datasets into blockchain assets via IPFS + NFT identity</li>
+                    <li data-i18n="crypto.bullet4"><strong style="color: var(--text-primary);">Robots.fun</strong> — On-chain robot betting with smart contract escrow and NFT reward system</li>
+                </ul>
+                <div class="project-features reveal reveal-d4">
+                    <a class="feature-pill feature-pill--link" href="https://x.com/SamIsMoving" target="_blank" data-i18n="crypto.pill1">$SAM</a>
+                    <a class="feature-pill feature-pill--link" href="https://x.com/LeelooSpeaks" target="_blank" data-i18n="crypto.pill2">$LEELOO</a>
+                    <span class="feature-pill" data-i18n="crypto.pill3">Smart Contracts</span>
+                    <span class="feature-pill" data-i18n="crypto.pill4">NFT Identity</span>
+                    <span class="feature-pill" data-i18n="crypto.pill5">On-chain Agents</span>
+                    <a class="feature-pill feature-pill--link" href="https://bitrobot.ai/" target="_blank" data-i18n="crypto.pill6">BitRobot</a>
+                </div>
+            </div>
+            <div class="project-visual-stack reveal reveal-d3">
+                <div class="project-visual">
+                    <img src="assets/crypto/slide18_img10.png" alt="Leeloo AI character avatar">
+                </div>
+                <div class="project-visual">
+                    <img src="assets/crypto/bitrobot.jpg" alt="BitRobot network concept illustration">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">008</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<!-- ===========================================
+     SLIDE 09: OUR CLIENTS
+     =========================================== -->
+<section class="slide" data-slide="8">
+    <div class="aurora"></div>
+    <div class="project-layout" style="align-items: center; text-align: center;">
+        <div class="section-label reveal" style="justify-content: center;" data-i18n="clients.label">Past Partnerships</div>
+        <h2 class="slide-title reveal reveal-d1" data-i18n="clients.title">Our Clients</h2>
+        <p class="slide-subtitle reveal reveal-d2" style="text-align: center; margin-bottom: clamp(1rem, 3vh, 2rem);" data-i18n="clients.subtitle">
+            Over 20 clients globally across AI, robotics, gaming, and Web3
+        </p>
+        <div class="clients-grid reveal reveal-d3">
+            <div class="client-card"><img src="assets/clients/slide21_img1.png" alt="Google DeepMind"></div>
+            <div class="client-card"><img src="assets/clients/slide21_img2.png" alt="Google"></div>
+            <div class="client-card"><img src="assets/clients/slide21_img9.png" alt="Wimbledon"></div>
+            <div class="client-card"><img src="assets/clients/slide21_img12.png" alt="UEFA"></div>
+            <div class="client-card"><img src="assets/clients/slide21_img5.png" alt="National University of Singapore"></div>
+            <div class="client-card"><img src="assets/clients/slide21_img6.png" alt="Seoul National University"></div>
+            <div class="client-card"><img src="assets/clients/slide21_img7.png" alt="UC Berkeley"></div>
+            <div class="client-card"><img src="assets/clients/slide21_img10.png" alt="Carnegie Mellon University"></div>
+            <div class="client-card"><img src="assets/clients/slide21_img8.png" alt="University of Texas at Austin"></div>
+            <div class="client-card"><img src="assets/clients/slide21_img3.png" alt="ASICS"></div>
+        </div>
+    </div>
+    <div class="slide-number">009</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<!-- ===========================================
+     SLIDE 10: CONTACT / THANK YOU
+     =========================================== -->
+<section class="slide" data-slide="9">
+    <div class="aurora aurora-gold"></div>
+    <div class="hero-center">
+        <img src="assets/brand/logo_horizontal.png" alt="SANA Company" class="sana-logo reveal">
+        <h1 class="hero-title reveal reveal-d1" style="font-size: clamp(2.5rem, 10vw, 8rem);">THANK YOU</h1>
+        <div class="accent-line reveal reveal-d2" style="margin: clamp(0.75rem, 2vh, 1.5rem) auto;"></div>
+        <p class="hero-tagline reveal reveal-d3" style="margin-bottom: clamp(1.5rem, 4vh, 3rem);" data-i18n="contact.tagline">Let's Make Your Ideas True</p>
+        <div class="contact-links reveal reveal-d4" style="align-items: center;">
+            <div class="contact-row">
+                <span class="contact-label" data-i18n="contact.web.label">Web</span>
+                <a href="https://sanacompany.io">sanacompany.io</a>
+            </div>
+            <div class="contact-row">
+                <span class="contact-label" data-i18n="contact.mail.label">Mail</span>
+                <a href="mailto:info@sanacompany.io">info@sanacompany.io</a>
+            </div>
+            <div class="contact-row">
+                <span class="contact-label" data-i18n="contact.phone.label">Phone</span>
+                <span style="font-size: var(--body-size); color: var(--text-secondary);">+82-10-2338-9661</span>
+            </div>
+            <div class="contact-row">
+                <span class="contact-label" data-i18n="contact.hq.label">HQ</span>
+                <span style="font-size: var(--body-size); color: var(--text-secondary);" data-i18n="contact.hq.value">Coconut Creek, FL, United States</span>
+            </div>
+            <div class="contact-row">
+                <span class="contact-label" data-i18n="contact.kr.label">Korea</span>
+                <span style="font-size: var(--body-size); color: var(--text-secondary);" data-i18n="contact.kr.value">서울특별시 강남구 강남대로112길 47</span>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">010</div>
+    <div class="brand-mark"><img src="assets/brand/logo_2x.png" alt="SANA"></div>
+</section>
+
+<script>
+    /* ===========================================
+       i18n — LANGUAGE SWITCHING
+       =========================================== */
+    let translations = null;
+    let currentLang = 'en';
+
+    async function loadTranslations() {
+        try {
+            const resp = await fetch('translations.json');
+            translations = await resp.json();
+        } catch (e) {
+            console.warn('Could not load translations.json, language switching disabled.');
+        }
+    }
+
+    function applyLang(lang) {
+        if (!translations || !translations[lang]) return;
+        const dict = translations[lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[key] !== undefined) {
+                el.innerHTML = dict[key];
+            }
+        });
+        // Update toggle button states
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+        currentLang = lang;
+        document.documentElement.lang = lang === 'kr' ? 'ko' : 'en';
+    }
+
+    function switchLang(lang) {
+        applyLang(lang);
+    }
+
+    function applyPillLinks() {
+        if (!translations || !translations.pillLinks) return;
+        const links = translations.pillLinks;
+        document.querySelectorAll('[data-pill-link]').forEach(el => {
+            const key = el.getAttribute('data-pill-link');
+            if (links[key]) {
+                el.href = links[key];
+            }
+        });
+    }
+
+    // Load on startup
+    loadTranslations().then(() => applyPillLinks());
+
+    /* ===========================================
+       SLIDE PRESENTATION CONTROLLER
+       =========================================== */
+    class SlidePresentation {
+        constructor() {
+            this.slides = document.querySelectorAll('.slide');
+            this.currentSlide = 0;
+            this.setupIntersectionObserver();
+            this.setupKeyboardNav();
+            this.setupTouchNav();
+            this.setupProgressBar();
+            this.setupNavDots();
+            this.setupCounterAnimation();
+        }
+
+        setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        const idx = parseInt(entry.target.dataset.slide);
+                        if (!isNaN(idx)) {
+                            this.currentSlide = idx;
+                            this.updateNavDots();
+                            this.updateProgressBar();
+                        }
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            this.slides.forEach(slide => observer.observe(slide));
+        }
+
+        setupKeyboardNav() {
+            document.addEventListener('keydown', (e) => {
+                if (['ArrowDown', 'ArrowRight', 'Space', 'PageDown'].includes(e.code)) {
+                    e.preventDefault();
+                    this.goToSlide(this.currentSlide + 1);
+                } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.code)) {
+                    e.preventDefault();
+                    this.goToSlide(this.currentSlide - 1);
+                } else if (e.code === 'Home') {
+                    e.preventDefault();
+                    this.goToSlide(0);
+                } else if (e.code === 'End') {
+                    e.preventDefault();
+                    this.goToSlide(this.slides.length - 1);
+                }
+            });
+        }
+
+        setupTouchNav() {
+            let startY = 0;
+            let startX = 0;
+            document.addEventListener('touchstart', (e) => {
+                startY = e.touches[0].clientY;
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+
+            document.addEventListener('touchend', (e) => {
+                const deltaY = startY - e.changedTouches[0].clientY;
+                const deltaX = startX - e.changedTouches[0].clientX;
+                if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50) {
+                    if (deltaY > 0) this.goToSlide(this.currentSlide + 1);
+                    else this.goToSlide(this.currentSlide - 1);
+                }
+            }, { passive: true });
+        }
+
+        setupProgressBar() {
+            this.progressBar = document.getElementById('progressBar');
+            this.updateProgressBar();
+        }
+
+        updateProgressBar() {
+            const progress = ((this.currentSlide + 1) / this.slides.length) * 100;
+            this.progressBar.style.width = progress + '%';
+        }
+
+        setupNavDots() {
+            const container = document.getElementById('navDots');
+            this.slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                dot.addEventListener('click', () => this.goToSlide(i));
+                container.appendChild(dot);
+            });
+            this.dots = container.querySelectorAll('.nav-dot');
+        }
+
+        updateNavDots() {
+            this.dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === this.currentSlide);
+            });
+        }
+
+        goToSlide(index) {
+            if (index < 0 || index >= this.slides.length) return;
+            this.slides[index].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        setupCounterAnimation() {
+            const counters = document.querySelectorAll('[data-count]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.dataset.animated) {
+                        entry.target.dataset.animated = 'true';
+                        const target = parseInt(entry.target.dataset.count);
+                        const duration = 1500;
+                        const start = performance.now();
+                        const animate = (now) => {
+                            const elapsed = now - start;
+                            const progress = Math.min(elapsed / duration, 1);
+                            const eased = 1 - Math.pow(1 - progress, 3);
+                            entry.target.textContent = Math.round(target * eased) + (target >= 10 ? '+' : '');
+                            if (progress < 1) requestAnimationFrame(animate);
+                        };
+                        requestAnimationFrame(animate);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(c => observer.observe(c));
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        new SlidePresentation();
+
+        // Lightbox (images + video)
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxVideo = document.getElementById('lightboxVideo');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        function openImageLightbox(src, alt) {
+            lightboxVideo.style.display = 'none';
+            lightboxVideo.pause();
+            lightboxImg.style.display = '';
+            lightboxImg.src = src;
+            lightboxImg.alt = alt || '';
+            lightbox.classList.add('active');
+        }
+
+        function openVideoLightbox(src) {
+            lightboxImg.style.display = 'none';
+            lightboxVideo.style.display = '';
+            lightboxVideo.src = src;
+            lightboxVideo.muted = true;
+            lightbox.classList.add('active');
+            lightboxVideo.play();
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightboxVideo.pause();
+            lightboxVideo.src = '';
+        }
+
+        // Image clicks (exclude video thumbnails)
+        document.querySelectorAll('.project-visual img, .project-visual-stack img').forEach(img => {
+            const parent = img.closest('.video-thumb');
+            if (parent) return; // handled by video-thumb listener
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openImageLightbox(img.src, img.alt);
+            });
+        });
+
+        // Video thumbnail clicks
+        document.querySelectorAll('.video-thumb[data-video]').forEach(thumb => {
+            thumb.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openVideoLightbox(thumb.dataset.video);
+            });
+        });
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+        });
+    });
+</script>
+</body>
+</html>
