@@ -518,7 +518,7 @@
             padding-left: clamp(12px, 1.5vw, 20px);
             position: relative;
         }
-        .project-bullets li::before {
+        .project-bullets > li::before {
             content: '';
             position: absolute; left: 0;
             top: clamp(6px, 0.8vh, 10px);
@@ -526,6 +526,29 @@
             height: clamp(4px, 0.4vw, 6px);
             border-radius: 50%;
             background: var(--gold);
+        }
+        .project-bullets .sub-bullets {
+            list-style: none;
+            display: flex; flex-direction: column;
+            gap: clamp(0.15rem, 0.4vh, 0.35rem);
+            margin-top: clamp(0.2rem, 0.5vh, 0.4rem);
+            padding-left: clamp(8px, 1vw, 14px);
+        }
+        .project-bullets .sub-bullets li {
+            font-size: clamp(0.75rem, 1.3vw, 1rem);
+            color: var(--text-secondary);
+            line-height: 1.4;
+            padding-left: clamp(10px, 1.2vw, 16px);
+            position: relative;
+        }
+        .project-bullets .sub-bullets li::before {
+            content: '';
+            position: absolute; left: 0;
+            top: clamp(5px, 0.7vh, 8px);
+            width: clamp(3px, 0.3vw, 5px);
+            height: clamp(3px, 0.3vw, 5px);
+            border-radius: 50%;
+            background: var(--text-muted);
         }
 
         /* ===========================================
@@ -965,10 +988,15 @@
                 </p>
                 <div class="accent-line reveal reveal-d2"></div>
                 <ul class="project-bullets reveal reveal-d3">
-                    <li data-i18n="robotics.bullet1"><strong style="color: var(--text-primary);">EarthRovers</strong> — Autonomous driving robots combining gaming and AI research using real-world navigation</li>
-                    <li data-i18n="robotics.bullet2"><strong style="color: var(--text-primary);">Full ROS & SDK</strong> — Complete robot control software suite for fleet operations</li>
-                    <li data-i18n="robotics.bullet3"><strong style="color: var(--text-primary);">Privacy-first</strong> — Automated face & license plate blur processing on all collected data</li>
-                    <li data-i18n="robotics.bullet4"><strong style="color: var(--text-primary);">Global Community</strong> — Worldwide network of gamers and AI enthusiasts driving robots remotely</li>
+                    <li><span data-i18n="robotics.bullet1"><strong style="color: var(--text-primary);">EarthRovers</strong> — Autonomous driving robots combining gaming and AI research using real-world navigation</span>
+                        <ul class="sub-bullets">
+                            <li data-i18n="robotics.sub1"><strong style="color: var(--text-primary);">Full ROS & SDK</strong> — Complete robot control software suite for fleet operations</li>
+                            <li data-i18n="robotics.sub2"><strong style="color: var(--text-primary);">Privacy-first</strong> — Automated face & license plate blur processing on all collected data</li>
+                            <li data-i18n="robotics.sub3"><strong style="color: var(--text-primary);">Global Community</strong> — Worldwide network of gamers and AI enthusiasts driving robots remotely</li>
+                        </ul>
+                    </li>
+                    <li><span data-i18n="robotics.bullet2"><strong style="color: var(--text-primary);">Telearms</strong> — Simulation platform for controlling robotic arms and gathering data for robotics labs</span>
+                    </li>
                 </ul>
                 <div class="project-features reveal reveal-d4">
                     <a class="feature-pill feature-pill--link" href="https://etfugi.gg/" target="_blank" data-i18n="robotics.pill1">ET Fugi</a>
@@ -1006,10 +1034,16 @@
                 </p>
                 <div class="accent-line reveal reveal-d2"></div>
                 <ul class="project-bullets reveal reveal-d3">
-                    <li data-i18n="iot.bullet1"><strong style="color: var(--text-primary);">Tocaro Blue</strong> — Real-time yacht monitoring: battery, bilge, temperature, humidity, GPS with smart alerts</li>
-                    <li data-i18n="iot.bullet2"><strong style="color: var(--text-primary);">Proteus</strong> — "Tesla on Water" — simplifies radar and chart data into clear, actionable insights for maritime safety</li>
-                    <li data-i18n="iot.bullet3"><strong style="color: var(--text-primary);">Sensor Fusion</strong> — Unified analytics from multiple IoT endpoints for predictive alerting</li>
-                    <li data-i18n="iot.bullet4"><strong style="color: var(--text-primary);">Geofencing</strong> — Location-based alerts and boundary monitoring for fleet management</li>
+                    <li><span data-i18n="iot.bullet1"><strong style="color: var(--text-primary);">Tocaro Blue</strong> — Real-time yacht monitoring: battery, bilge, temperature, humidity, GPS with smart alerts</span>
+                        <ul class="sub-bullets">
+                            <li data-i18n="iot.sub1"><strong style="color: var(--text-primary);">Sensor Fusion</strong> — Unified analytics from multiple IoT endpoints for predictive alerting</li>
+                        </ul>
+                    </li>
+                    <li><span data-i18n="iot.bullet2"><strong style="color: var(--text-primary);">Proteus</strong> — "Tesla on Water" — simplifies radar and chart data into clear, actionable insights for maritime safety</span>
+                        <ul class="sub-bullets">
+                            <li data-i18n="iot.sub2"><strong style="color: var(--text-primary);">Geofencing</strong> — Location-based alerts and boundary monitoring for fleet management</li>
+                        </ul>
+                    </li>
                 </ul>
                 <div class="project-features reveal reveal-d4">
                     <a class="feature-pill feature-pill--link" href="https://www.tocaroblue.com/" target="_blank" data-i18n="iot.pill1">Tocaro Blue</a>
