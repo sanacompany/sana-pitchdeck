@@ -589,20 +589,28 @@
         .photo-slider {
             position: relative;
             width: 100%;
+            aspect-ratio: 4 / 3;
             overflow: hidden;
             border-radius: clamp(8px, 1vw, 16px);
+            background: var(--bg-primary);
         }
         .photo-slider__track {
             display: flex;
+            height: 100%;
             transition: transform 0.5s ease;
         }
         .photo-slider__track img {
             width: 100%;
             min-width: 100%;
+            height: 100%;
             flex-shrink: 0;
             object-fit: cover;
             cursor: pointer;
             display: block;
+        }
+        .photo-slider__track img[data-fit="contain"] {
+            object-fit: contain;
+            background: var(--bg-primary);
         }
         .photo-slider__dots {
             position: absolute;
@@ -1006,22 +1014,22 @@
             <div class="expertise-card reveal reveal-d1">
                 <div class="card-icon card-icon-ai"><img src="assets/ai/slide8_img4.png" alt="AI"></div>
                 <div class="card-title" data-i18n="expertise.ai.title">AI / Research</div>
-                <div class="card-desc" data-i18n="expertise.ai.desc">Computer vision, VLMs & large-scale data collection</div>
+                <div class="card-desc" data-i18n="expertise.ai.desc">Computer vision, VLMs, reinforcement learning & large-scale data pipelines</div>
             </div>
             <div class="expertise-card reveal reveal-d2">
                 <div class="card-icon card-icon-robotics"><img src="assets/robotics/slide10_img3.png" alt="Robotics"></div>
                 <div class="card-title" data-i18n="expertise.robotics.title">Robotics</div>
-                <div class="card-desc" data-i18n="expertise.robotics.desc">Autonomous driving, ROS/SDK & fleet ops</div>
+                <div class="card-desc" data-i18n="expertise.robotics.desc">Autonomous navigation, SLAM, ROS2 & multi-robot coordination</div>
             </div>
             <div class="expertise-card reveal reveal-d3">
                 <div class="card-icon card-icon-iot"><img src="assets/iot/slide10_img2.png" alt="IoT"></div>
                 <div class="card-title" data-i18n="expertise.iot.title">IoT & Maritime</div>
-                <div class="card-desc" data-i18n="expertise.iot.desc">Sensor monitoring, navigation & geofencing</div>
+                <div class="card-desc" data-i18n="expertise.iot.desc">Edge computing, MQTT telemetry, sensor fusion & geofencing</div>
             </div>
             <div class="expertise-card reveal reveal-d4">
                 <div class="card-icon card-icon-games"><img src="assets/games/slide8_img5.png" alt="Games"></div>
                 <div class="card-title" data-i18n="expertise.games.title">Games & Virtual</div>
-                <div class="card-desc" data-i18n="expertise.games.desc">3D metaverses, gamification & live events</div>
+                <div class="card-desc" data-i18n="expertise.games.desc">Real-time 3D, WebSocket multiplayer & live events</div>
             </div>
             <div class="expertise-card reveal reveal-d5">
                 <div class="card-icon card-icon-crypto"><img src="assets/crypto/slide8_img8.png" alt="Crypto"></div>
@@ -1045,14 +1053,14 @@
             <div>
                 <h2 class="slide-title reveal reveal-d1" data-i18n="ai.title">AI / Research</h2>
                 <p class="reveal reveal-d2" style="margin-top: clamp(0.3rem, 1vh, 0.75rem); font-style: italic; color: var(--gold); font-size: var(--body-size);" data-i18n="ai.subtitle">
-                    Embodied AI research, computer vision & real-world data
+                    Embodied AI, reinforcement learning, computer vision & multi-modal data
                 </p>
                 <div class="accent-line reveal reveal-d2"></div>
                 <ul class="project-bullets reveal reveal-d3">
-                    <li data-i18n="ai.bullet1"><strong style="color: var(--gold);">Google DeepMind partnership</strong> — Innovation-leading collaboration on embodied AI research</li>
-                    <li data-i18n="ai.bullet2"><strong style="color: var(--text-primary);">AI Data Generation</strong> — 9,000+ hours of real-world navigation video for advanced AI training</li>
+                    <li data-i18n="ai.bullet1"><strong style="color: var(--gold);">Google DeepMind partnership</strong> — Pioneering collaboration on embodied AI with reinforcement learning from human feedback (RLHF)</li>
+                    <li data-i18n="ai.bullet2"><strong style="color: var(--text-primary);">AI Data Generation</strong> — 9,000+ hours of real-world navigation video for imitation learning & policy optimization</li>
                     <li data-i18n="ai.bullet3"><strong style="color: var(--text-primary);">Conference Presentations</strong> — Featured at IROS (Abu Dhabi), ICRA (Atlanta), and CORL (Seoul)</li>
-                    <li data-i18n="ai.bullet4"><strong style="color: var(--text-primary);">University Collaborations</strong> — Teams from UC Berkeley, SNU, NUS, and CMU</li>
+                    <li data-i18n="ai.bullet4"><strong style="color: var(--text-primary);">University Collaborations</strong> — Joint research with UC Berkeley, SNU, NUS, and CMU on sim-to-real transfer & reward shaping</li>
                 </ul>
                 <div class="project-features reveal reveal-d4">
                     <a class="feature-pill feature-pill--link" data-pill-link="ai.pill1" href="https://ieeexplore.ieee.org/document/11037317" target="_blank" data-i18n="ai.pill1">Google DeepMind</a>
@@ -1062,6 +1070,8 @@
                     <a class="feature-pill feature-pill--link" data-pill-link="ai.pill5" href="https://huggingface.co/datasets/frodobots/FrodoBots-2K" target="_blank" data-i18n="ai.pill5">2K hrs Dataset</a>
                     <a class="feature-pill feature-pill--link" data-pill-link="ai.pill6" href="https://huggingface.co/datasets/frodobots/Berkeley-FrodoBots-7K" target="_blank" data-i18n="ai.pill6">7K hrs Dataset</a>
                     <a class="feature-pill feature-pill--link" href="https://www.youtube.com/watch?v=B9J9Ld77s5o" target="_blank" data-i18n="ai.pill7">IROS24 Competition</a>
+                    <span class="feature-pill" data-i18n="ai.pill8">Reinforcement Learning</span>
+                    <span class="feature-pill" data-i18n="ai.pill9">RLHF</span>
                 </div>
             </div>
             <div class="project-visual reveal reveal-d3">
@@ -1070,8 +1080,8 @@
                         <img src="assets/ai/iros-1.png" alt="IROS conference demo">
                         <img src="assets/ai/iros-3.png" alt="IROS conference team">
                         <img src="assets/ai/iros-4.png" alt="IROS conference booth">
-                        <img src="assets/ai/corl-1.jpeg" alt="CORL conference">
-                        <img src="assets/ai/corl-2.jpeg" alt="CORL conference">
+                        <img src="assets/ai/corl-1.jpeg" alt="CORL conference" data-fit="contain">
+                        <img src="assets/ai/corl-2.jpeg" alt="CORL conference" data-fit="contain">
                     </div>
                 </div>
             </div>
@@ -1092,18 +1102,18 @@
             <div>
                 <h2 class="slide-title reveal reveal-d1" data-i18n="robotics.title">Robotics</h2>
                 <p class="reveal reveal-d2" style="margin-top: clamp(0.3rem, 1vh, 0.75rem); font-style: italic; color: var(--gold); font-size: var(--body-size);" data-i18n="robotics.subtitle">
-                    Navigation, manipulation & fleet autonomy
+                    SLAM, path planning, manipulation & multi-agent fleet autonomy
                 </p>
                 <div class="accent-line reveal reveal-d2"></div>
                 <ul class="project-bullets reveal reveal-d3">
-                    <li><span data-i18n="robotics.bullet1"><strong style="color: var(--text-primary);">EarthRovers</strong> — Autonomous driving robots combining gaming and AI research using real-world navigation</span>
+                    <li><span data-i18n="robotics.bullet1"><strong style="color: var(--text-primary);">EarthRovers</strong> — Autonomous mobile robots with end-to-end perception, SLAM & trajectory planning for real-world navigation</span>
                         <ul class="sub-bullets">
-                            <li data-i18n="robotics.sub1"><strong style="color: var(--text-primary);">Full ROS & SDK</strong> — Complete robot control software suite for fleet operations</li>
+                            <li data-i18n="robotics.sub1"><strong style="color: var(--text-primary);">Full ROS & SDK</strong> — ROS2 navigation stack, sensor drivers & multi-robot orchestration layer</li>
                             <li data-i18n="robotics.sub2"><strong style="color: var(--text-primary);">Privacy-first</strong> — Automated face & license plate blur processing on all collected data</li>
                             <li data-i18n="robotics.sub3"><strong style="color: var(--text-primary);">Global Community</strong> — Worldwide network of gamers and AI enthusiasts driving robots remotely</li>
                         </ul>
                     </li>
-                    <li><span data-i18n="robotics.bullet2"><strong style="color: var(--text-primary);">Telearms</strong> — Simulation platform for controlling robotic arms and gathering data for robotics labs</span>
+                    <li><span data-i18n="robotics.bullet2"><strong style="color: var(--text-primary);">Telearms</strong> — Teleoperation platform for robotic arm manipulation with inverse kinematics & sim-to-real data collection</span>
                     </li>
                 </ul>
                 <div class="project-features reveal reveal-d4">
@@ -1111,6 +1121,8 @@
                     <a class="feature-pill feature-pill--link" href="https://github.com/frodobots-org/earth-rovers-sdk" target="_blank" data-i18n="robotics.pill2">Earth Rovers SDK</a>
                     <span class="feature-pill" data-i18n="robotics.pill3">ROS</span>
                     <span class="feature-pill" data-i18n="robotics.pill4">Fleet Operations</span>
+                    <span class="feature-pill" data-i18n="robotics.pill5">SLAM</span>
+                    <span class="feature-pill" data-i18n="robotics.pill6">Path Planning</span>
                 </div>
             </div>
             <div class="project-visual-stack reveal reveal-d3">
@@ -1138,18 +1150,18 @@
             <div>
                 <h2 class="slide-title reveal reveal-d1" data-i18n="iot.title">IoT & Maritime Intelligence</h2>
                 <p class="reveal reveal-d2" style="margin-top: clamp(0.3rem, 1vh, 0.75rem); font-style: italic; color: var(--turquoise); font-size: var(--body-size);" data-i18n="iot.subtitle">
-                    Smart monitoring & autonomous navigation
+                    Edge computing, MQTT pipelines & autonomous navigation
                 </p>
                 <div class="accent-line reveal reveal-d2"></div>
                 <ul class="project-bullets reveal reveal-d3">
-                    <li><span data-i18n="iot.bullet1"><strong style="color: var(--text-primary);">Tocaro Blue</strong> — Real-time yacht monitoring: battery, bilge, temperature, humidity, GPS with smart alerts</span>
+                    <li><span data-i18n="iot.bullet1"><strong style="color: var(--text-primary);">Tocaro Blue</strong> — Real-time yacht telemetry over MQTT: battery, bilge, temperature, humidity, GPS with threshold-based alerting</span>
                         <ul class="sub-bullets">
-                            <li data-i18n="iot.sub1"><strong style="color: var(--text-primary);">Sensor Fusion</strong> — Unified analytics from multiple IoT endpoints for predictive alerting</li>
+                            <li data-i18n="iot.sub1"><strong style="color: var(--text-primary);">Sensor Fusion</strong> — Multi-sensor data fusion with time-series aggregation & anomaly detection for predictive maintenance</li>
                         </ul>
                     </li>
-                    <li><span data-i18n="iot.bullet2"><strong style="color: var(--text-primary);">Proteus</strong> — "Tesla on Water" — simplifies radar and chart data into clear, actionable insights for maritime safety</span>
+                    <li><span data-i18n="iot.bullet2"><strong style="color: var(--text-primary);">Proteus</strong> — "Tesla on Water" — fuses AIS transponder, radar & ENC chart data into real-time collision avoidance overlays</span>
                         <ul class="sub-bullets">
-                            <li data-i18n="iot.sub2"><strong style="color: var(--text-primary);">Geofencing</strong> — Location-based alerts and boundary monitoring for fleet management</li>
+                            <li data-i18n="iot.sub2"><strong style="color: var(--text-primary);">Geofencing</strong> — GPS polygon geofencing with NMEA 2000 integration for fleet-wide boundary enforcement</li>
                         </ul>
                     </li>
                 </ul>
@@ -1159,6 +1171,8 @@
                     <span class="feature-pill" data-i18n="iot.pill3">Autonomous Navigation</span>
                     <span class="feature-pill" data-i18n="iot.pill4">Sensor Fusion</span>
                     <span class="feature-pill" data-i18n="iot.pill5">Geofencing</span>
+                    <span class="feature-pill" data-i18n="iot.pill6">MQTT</span>
+                    <span class="feature-pill" data-i18n="iot.pill7">Edge Computing</span>
                 </div>
             </div>
             <div class="project-visual-stack reveal reveal-d3">
@@ -1186,19 +1200,21 @@
             <div>
                 <h2 class="slide-title reveal reveal-d1" data-i18n="games.title">Games & Virtual Experiences</h2>
                 <p class="reveal reveal-d2" style="margin-top: clamp(0.3rem, 1vh, 0.75rem); font-style: italic; color: var(--gold); font-size: var(--body-size);" data-i18n="games.subtitle">
-                    3D metaverses, gamification & fan engagement
+                    Real-time 3D rendering, WebSocket multiplayer & interactive experiences
                 </p>
                 <div class="accent-line reveal reveal-d2"></div>
                 <ul class="project-bullets reveal reveal-d3">
-                    <li data-i18n="games.bullet1"><strong style="color: var(--text-primary);">Wimbledon Hill</strong> — 3D avatar fan experience with 10,000+ simultaneous users, renewed for second year</li>
-                    <li data-i18n="games.bullet2"><strong style="color: var(--text-primary);">UEFA Virtual Events</strong> — Champions League fan experience with 20,000+ participants, quiz winners received final tickets</li>
-                    <li data-i18n="games.bullet3"><strong style="color: var(--text-primary);">The Rivals</strong> — Multiplayer business simulation for education, used by universities, Hyundai, and Adidas</li>
+                    <li data-i18n="games.bullet1"><strong style="color: var(--text-primary);">Wimbledon Hill</strong> — Real-time 3D avatar experience with WebSocket state sync, handling 10,000+ CCU, renewed for second year</li>
+                    <li data-i18n="games.bullet2"><strong style="color: var(--text-primary);">UEFA Virtual Events</strong> — Champions League fan experience with server-authoritative game state, 20,000+ CCU, quiz winners received final tickets</li>
+                    <li data-i18n="games.bullet3"><strong style="color: var(--text-primary);">The Rivals</strong> — Multiplayer business simulation with agent-based economic modeling, used by universities, Hyundai, and Adidas</li>
                 </ul>
                 <div class="project-features reveal reveal-d4">
                     <span class="feature-pill" data-i18n="games.pill1">3D Metaverse</span>
                     <span class="feature-pill" data-i18n="games.pill2">10K–20K Concurrent</span>
                     <span class="feature-pill" data-i18n="games.pill3">Gamification</span>
                     <span class="feature-pill" data-i18n="games.pill4">Education</span>
+                    <span class="feature-pill" data-i18n="games.pill5">WebSocket</span>
+                    <span class="feature-pill" data-i18n="games.pill6">Real-time 3D</span>
                 </div>
             </div>
             <div class="project-visual reveal reveal-d3">
@@ -1268,7 +1284,7 @@
         <div class="section-label reveal" style="justify-content: center;" data-i18n="clients.label">Past Partnerships</div>
         <h2 class="slide-title reveal reveal-d1" data-i18n="clients.title">Our Clients</h2>
         <p class="slide-subtitle reveal reveal-d2" style="text-align: center; margin-bottom: clamp(1rem, 3vh, 2rem);" data-i18n="clients.subtitle">
-            Over 20 clients globally across AI, robotics, gaming, and Web3
+            Over 30 clients globally across AI, robotics, gaming, and Web3
         </p>
         <div class="clients-grid reveal reveal-d3">
             <div class="client-card"><img src="assets/clients/slide21_img1.png" alt="Google DeepMind"></div>
@@ -1294,9 +1310,8 @@
     <div class="aurora aurora-gold"></div>
     <div class="hero-center">
         <img src="assets/brand/logo_horizontal.png" alt="SANA Company" class="sana-logo reveal">
-        <h1 class="hero-title reveal reveal-d1" style="font-size: clamp(2.5rem, 10vw, 8rem);">THANK YOU</h1>
+        <h1 class="hero-title reveal reveal-d1" style="font-size: clamp(2.5rem, 10vw, 8rem);" data-i18n="contact.tagline">Let's talk!</h1>
         <div class="accent-line reveal reveal-d2" style="margin: clamp(0.75rem, 2vh, 1.5rem) auto;"></div>
-        <p class="hero-tagline reveal reveal-d3" style="margin-bottom: clamp(1.5rem, 4vh, 3rem);" data-i18n="contact.tagline">Let's Make Your Ideas True</p>
         <div class="contact-links reveal reveal-d4" style="align-items: center;">
             <div class="contact-row">
                 <span class="contact-label" data-i18n="contact.web.label">Web</span>
