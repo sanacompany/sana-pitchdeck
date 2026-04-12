@@ -31,7 +31,7 @@
     "expertise.iot.desc": "Edge computing, MQTT telemetry, sensor fusion & geofencing",
     "expertise.games.title": "Games & Virtual",
     "expertise.games.desc": "Real-time 3D, WebSocket multiplayer & live events",
-    "expertise.crypto.title": "Crypto / Web3",
+    "expertise.crypto.title": "Blockchain / Web3",
     "expertise.crypto.desc": "On-chain agents, tokens & smart contracts",
 
     "ai.label": "Expertise",
@@ -102,7 +102,7 @@
     "games.pill7": "The Rivals",
 
     "crypto.label": "Expertise",
-    "crypto.title": "Crypto & Web3",
+    "crypto.title": "Blockchain & Web3",
     "crypto.subtitle": "On-chain agents, token economies & NFT systems",
     "crypto.bullet1": "<strong style=\"color: var(--text-primary);\">SAMIsMoving</strong> — World's first on-chain embodied AI agent navigating the real world 24/7 with $SAM token",
     "crypto.bullet2": "<strong style=\"color: var(--text-primary);\">LeelooSpeaks</strong> — First emotional AI influencer, 3D avatar livestreaming 24/7 with influence-based $LEELOO token",
@@ -122,6 +122,21 @@
     "clients.label": "Past Partnerships",
     "clients.title": "Our Clients",
     "clients.subtitle": "Over 30 clients globally across AI, robotics, gaming, and Web3",
+
+    "team.label": "Our People",
+    "team.title": "Leadership",
+    "team.subtitle": "A cross-continental founding team blending deep tech, product, and operations",
+    "team.santiago.desc": "Technical founder. Sets the vision, leads product strategy, and drives the partnerships that bring it all together.",
+    "team.esteban.desc": "Leads solution architecture and engineering. Delivers across all projects globally.",
+    "team.minjoo.desc": "Leads operations from South Korea. Scales teams, processes, and delivery to match our ambition.",
+
+    "global.label": "Global Presence",
+    "global.title": "Where We Are",
+    "global.subtitle": "A team of 12+ people distributed across three countries, covering development, operations, and marketing.",
+    "global.stat.people": "Team Members",
+    "global.stat.countries": "Countries",
+    "global.stat.timezones": "Time Zones",
+    "global.roles": "Development · Operations · Marketing",
 
     "contact.tagline": "Let's talk!",
     "contact.web.label": "Web",
@@ -155,7 +170,7 @@
     "expertise.iot.desc": "엣지 컴퓨팅, MQTT 텔레메트리, 센서 퓨전 & 지오펜싱",
     "expertise.games.title": "Games & Virtual",
     "expertise.games.desc": "실시간 3D, WebSocket 멀티플레이어 & 라이브 이벤트",
-    "expertise.crypto.title": "Crypto / Web3",
+    "expertise.crypto.title": "블록체인 / Web3",
     "expertise.crypto.desc": "온체인 에이전트, 토큰 & 스마트 컨트랙트",
 
     "ai.label": "전문 분야",
@@ -226,7 +241,7 @@
     "games.pill7": "The Rivals",
 
     "crypto.label": "전문 분야",
-    "crypto.title": "Crypto & Web3",
+    "crypto.title": "블록체인 & Web3",
     "crypto.subtitle": "온체인 에이전트, 토큰 이코노미 & NFT 시스템",
     "crypto.bullet1": "<strong style=\"color: var(--text-primary);\">SAMIsMoving</strong> — 세계 최초 온체인 체화 AI 에이전트, $SAM 토큰으로 24/7 실세계 탐색",
     "crypto.bullet2": "<strong style=\"color: var(--text-primary);\">LeelooSpeaks</strong> — 최초의 감성 AI 인플루언서, 영향력 기반 $LEELOO 토큰으로 24/7 3D 아바타 라이브 스트리밍",
@@ -246,6 +261,21 @@
     "clients.label": "파트너십",
     "clients.title": "Our Clients",
     "clients.subtitle": "AI, 로보틱스, 게임, Web3 분야 전 세계 30개 이상의 클라이언트",
+
+    "team.label": "팀 소개",
+    "team.title": "리더십",
+    "team.subtitle": "딥테크, 제품, 운영을 아우르는 글로벌 창업팀",
+    "team.santiago.desc": "기술 창업자. 비전을 설정하고, 제품 전략을 이끌며, 이를 실현할 파트너십을 주도합니다.",
+    "team.esteban.desc": "솔루션 아키텍처와 엔지니어링을 이끕니다. 모든 프로젝트를 글로벌하게 납품합니다.",
+    "team.minjoo.desc": "한국에서 운영을 이끕니다. 팀, 프로세스, 납품을 우리의 목표에 맞게 확장합니다.",
+
+    "global.label": "글로벌 네트워크",
+    "global.title": "우리의 위치",
+    "global.subtitle": "3개국에 분산된 12명 이상의 팀원이 개발, 운영, 마케팅을 담당합니다.",
+    "global.stat.people": "팀원",
+    "global.stat.countries": "국가",
+    "global.stat.timezones": "타임존",
+    "global.roles": "개발 · 운영 · 마케팅",
 
     "contact.tagline": "Let's talk!",
     "contact.web.label": "웹",

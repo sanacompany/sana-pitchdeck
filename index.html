@@ -171,6 +171,8 @@
       body {
         height: 100%;
         overflow-x: hidden;
+        word-break: keep-all;
+        overflow-wrap: break-word;
       }
       html {
         scroll-snap-type: y mandatory;
@@ -992,6 +994,121 @@
       }
 
       /* ===========================================
+           TEAM SLIDE — LEADERSHIP
+           =========================================== */
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1rem, 2vw, 2rem);
+        width: 100%;
+        max-width: min(90vw, 900px);
+        margin-top: clamp(1rem, 2vh, 2rem);
+      }
+      @media (max-width: 600px) {
+        .team-grid {
+          grid-template-columns: 1fr;
+          gap: clamp(0.75rem, 1.5vw, 1.25rem);
+        }
+      }
+      .team-card {
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: clamp(12px, 1.5vw, 20px);
+        padding: clamp(1.25rem, 2.5vw, 2rem);
+        text-align: center;
+        transition: border-color 0.3s ease, transform 0.3s ease;
+      }
+      .team-card:hover {
+        border-color: rgba(245, 197, 66, 0.25);
+        transform: translateY(-4px);
+      }
+      .team-card__avatar {
+        width: clamp(60px, 8vw, 90px);
+        height: clamp(60px, 8vw, 90px);
+        border-radius: 50%;
+        margin: 0 auto clamp(0.5rem, 1vh, 1rem);
+        object-fit: cover;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+      }
+      .team-card__name {
+        font-family: var(--font-heading);
+        font-size: clamp(1rem, 1.8vw, 1.35rem);
+        color: var(--text-primary);
+        font-weight: 700;
+        margin-bottom: 0.15em;
+      }
+      .team-card__role {
+        font-family: var(--font-heading);
+        font-size: var(--small-size);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: clamp(0.4rem, 0.8vh, 0.75rem);
+      }
+      .team-card__desc {
+        font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+
+      /* ===========================================
+           TEAM SLIDE — GLOBAL PRESENCE
+           =========================================== */
+      .global-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: min(90vw, 950px);
+      }
+
+      .global-locations {
+        display: flex;
+        justify-content: center;
+        gap: clamp(1.5rem, 4vw, 3.5rem);
+        flex-wrap: wrap;
+        margin-top: clamp(0.5rem, 1.5vh, 1.25rem);
+      }
+      .location-tag {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        font-family: var(--font-heading);
+        font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+      .location-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex-shrink: 0;
+      }
+      .global-stats {
+        display: flex;
+        justify-content: center;
+        gap: clamp(2rem, 5vw, 4rem);
+        margin-top: clamp(1rem, 2vh, 1.5rem);
+        flex-wrap: wrap;
+      }
+      .global-stat {
+        text-align: center;
+      }
+      .global-stat__number {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        color: var(--gold);
+        line-height: 1;
+      }
+      .global-stat__label {
+        font-size: var(--small-size);
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0.25em;
+      }
+
+      /* ===========================================
            CONTACT SLIDE
            =========================================== */
       .contact-links {
@@ -1046,7 +1163,7 @@
         z-index: 2;
       }
       .brand-mark img {
-        max-height: clamp(14px, 2vh, 24px);
+        max-height: clamp(24px, 4vh, 44px);
         object-fit: contain;
         opacity: 0.35;
       }
@@ -1334,30 +1451,10 @@
         >
           Let's Make Your Ideas True
         </p>
-        <div class="hero-stats reveal reveal-d4">
-          <div>
-            <div class="stat-value" data-count="50">0</div>
-            <div class="stat-label" data-i18n="hero.stat.projects">
-              Projects
-            </div>
-          </div>
-          <div>
-            <div class="stat-value" data-count="30">0</div>
-            <div class="stat-label" data-i18n="hero.stat.clients">
-              Clients
-            </div>
-          </div>
-          <div>
-            <div class="stat-value" data-count="6">0</div>
-            <div class="stat-label" data-i18n="hero.stat.domains">
-              Domains
-            </div>
-          </div>
-        </div>
       </div>
       <div class="slide-number">001</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
@@ -1401,17 +1498,138 @@
           SANA provides end-to-end software development services —
           from concept to deployment — tailored to your unique needs.
         </p>
+        <div class="hero-stats reveal reveal-d4">
+          <div>
+            <div class="stat-value" data-count="50">0</div>
+            <div class="stat-label" data-i18n="hero.stat.projects">
+              Projects
+            </div>
+          </div>
+          <div>
+            <div class="stat-value" data-count="30">0</div>
+            <div class="stat-label" data-i18n="hero.stat.clients">
+              Clients
+            </div>
+          </div>
+          <div>
+            <div class="stat-value" data-count="6">0</div>
+            <div class="stat-label" data-i18n="hero.stat.domains">
+              Domains
+            </div>
+          </div>
+        </div>
       </div>
       <div class="slide-number">002</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
     <!-- ===========================================
-     SLIDE 03: WHAT WE BUILD (4-card grid)
+     SLIDE 03: LEADERSHIP
      =========================================== -->
     <section class="slide" data-slide="2">
+      <div class="aurora"></div>
+      <div
+        class="project-layout"
+        style="align-items: center; text-align: center"
+      >
+        <div
+          class="section-label reveal"
+          style="justify-content: center"
+          data-i18n="team.label"
+        >
+          Our People
+        </div>
+        <h2
+          class="slide-title reveal reveal-d1"
+          data-i18n="team.title"
+        >
+          Leadership
+        </h2>
+        <p
+          class="slide-subtitle reveal reveal-d2"
+          style="text-align: center; margin-bottom: 0"
+          data-i18n="team.subtitle"
+        >
+          A cross-continental founding team blending deep tech, product, and operations
+        </p>
+        <div class="team-grid reveal reveal-d3">
+          <!-- Santiago -->
+          <div class="team-card">
+            <img
+              class="team-card__avatar"
+              src="assets/team/IMG_2548.jpeg"
+              alt="Santiago Pravisani"
+            />
+            <div class="team-card__name">Santiago Pravisani</div>
+            <div
+              class="team-card__role"
+              style="color: var(--gold)"
+            >
+              CEO
+            </div>
+            <p
+              class="team-card__desc"
+              data-i18n="team.santiago.desc"
+            >
+              Technical founder. Sets the vision, leads product strategy, and drives the partnerships that bring it all together.
+            </p>
+          </div>
+          <!-- Esteban -->
+          <div class="team-card">
+            <img
+              class="team-card__avatar"
+              src="assets/team/esteban.jpeg"
+              alt="Esteban Fuhrmann"
+            />
+            <div class="team-card__name">Esteban Fuhrmann</div>
+            <div
+              class="team-card__role"
+              style="color: var(--turquoise)"
+            >
+              CTO
+            </div>
+            <p
+              class="team-card__desc"
+              data-i18n="team.esteban.desc"
+            >
+              Leads solution architecture and engineering. Delivers across all projects globally.
+            </p>
+          </div>
+          <!-- Minjoo -->
+          <div class="team-card">
+            <img
+              class="team-card__avatar"
+              src="assets/team/minjoo.jpeg"
+              alt="Minjoo Koo"
+            />
+            <div class="team-card__name">Minjoo Koo</div>
+            <div
+              class="team-card__role"
+              style="color: var(--magenta)"
+            >
+              COO
+            </div>
+            <p
+              class="team-card__desc"
+              data-i18n="team.minjoo.desc"
+            >
+              Leads operations from South Korea. Scales teams, processes, and delivery to match our ambition.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">003</div>
+      <div class="brand-mark">
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
+      </div>
+    </section>
+
+    <!-- ===========================================
+     SLIDE 04: WHAT WE BUILD (4-card grid)
+     =========================================== -->
+    <section class="slide" data-slide="3">
       <div class="aurora aurora-blue"></div>
       <div
         class="project-layout"
@@ -1496,7 +1714,7 @@
               class="card-title"
               data-i18n="expertise.crypto.title"
             >
-              Crypto / Web3
+              Blockchain / Web3
             </div>
             <div class="card-desc" data-i18n="expertise.crypto.desc">
               On-chain agents, tokens & smart contracts
@@ -1504,16 +1722,16 @@
           </div>
         </div>
       </div>
-      <div class="slide-number">003</div>
+      <div class="slide-number">004</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
     <!-- ===========================================
-     SLIDE 04: AI / RESEARCH
+     SLIDE 05: AI / RESEARCH
      =========================================== -->
-    <section class="slide" data-slide="3">
+    <section class="slide" data-slide="4">
       <div class="aurora"></div>
       <div class="project-layout">
         <div class="section-label reveal" data-i18n="ai.label">
@@ -1661,16 +1879,16 @@
           </div>
         </div>
       </div>
-      <div class="slide-number">004</div>
+      <div class="slide-number">005</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
     <!-- ===========================================
-     SLIDE 05: ROBOTICS
+     SLIDE 06: ROBOTICS
      =========================================== -->
-    <section class="slide" data-slide="4">
+    <section class="slide" data-slide="5">
       <div class="aurora aurora-gold"></div>
       <div class="project-layout">
         <div class="section-label reveal" data-i18n="robotics.label">
@@ -1813,16 +2031,16 @@
           </div>
         </div>
       </div>
-      <div class="slide-number">005</div>
+      <div class="slide-number">006</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
     <!-- ===========================================
-     SLIDE 06: IoT & MARITIME INTELLIGENCE
+     SLIDE 07: IoT & MARITIME INTELLIGENCE
      =========================================== -->
-    <section class="slide" data-slide="5">
+    <section class="slide" data-slide="6">
       <div class="aurora aurora-blue"></div>
       <div class="project-layout">
         <div class="section-label reveal" data-i18n="iot.label">
@@ -1934,16 +2152,16 @@
           </div>
         </div>
       </div>
-      <div class="slide-number">006</div>
+      <div class="slide-number">007</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
     <!-- ===========================================
-     SLIDE 07: GAMES & VIRTUAL EXPERIENCES
+     SLIDE 08: GAMES & VIRTUAL EXPERIENCES
      =========================================== -->
-    <section class="slide" data-slide="6">
+    <section class="slide" data-slide="7">
       <div class="aurora aurora-gold"></div>
       <div class="project-layout">
         <div class="section-label reveal" data-i18n="games.label">
@@ -2045,16 +2263,16 @@
           </div>
         </div>
       </div>
-      <div class="slide-number">007</div>
+      <div class="slide-number">008</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
     <!-- ===========================================
-     SLIDE 08: CRYPTO & WEB3
+     SLIDE 09: BLOCKCHAIN & WEB3
      =========================================== -->
-    <section class="slide" data-slide="7">
+    <section class="slide" data-slide="8">
       <div class="aurora"></div>
       <div class="project-layout">
         <div class="section-label reveal" data-i18n="crypto.label">
@@ -2066,7 +2284,7 @@
               class="slide-title reveal reveal-d1"
               data-i18n="crypto.title"
             >
-              Crypto & Web3
+              Blockchain & Web3
             </h2>
             <p
               class="reveal reveal-d2"
@@ -2173,16 +2391,16 @@
           </div>
         </div>
       </div>
-      <div class="slide-number">008</div>
+      <div class="slide-number">009</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
     <!-- ===========================================
-     SLIDE 09: OUR CLIENTS
+     SLIDE 10: OUR CLIENTS
      =========================================== -->
-    <section class="slide" data-slide="8">
+    <section class="slide" data-slide="9">
       <div class="aurora"></div>
       <div
         class="project-layout"
@@ -2266,16 +2484,16 @@
           </div>
         </div>
       </div>
-      <div class="slide-number">009</div>
+      <div class="slide-number">010</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
     <!-- ===========================================
-     SLIDE 10: CONTACT / THANK YOU
+     SLIDE 11: CONTACT / THANK YOU
      =========================================== -->
-    <section class="slide" data-slide="9">
+    <section class="slide" data-slide="10">
       <div class="aurora aurora-gold"></div>
       <div class="hero-center">
         <img
@@ -2354,9 +2572,9 @@
           </div>
         </div>
       </div>
-      <div class="slide-number">010</div>
+      <div class="slide-number">011</div>
       <div class="brand-mark">
-        <img src="assets/brand/logo_2x.png" alt="SANA" />
+        <img src="assets/brand/slide1_img3.png" alt="SANA" />
       </div>
     </section>
 
@@ -2742,6 +2960,7 @@
             resetTimer()
           })
       })
+
     </script>
   </body>
 </html>
